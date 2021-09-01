@@ -9,8 +9,16 @@ import ToyContainer from './components/ToyContainer'
 class App extends React.Component{
 
   state = {
-    display: false
+    display: false,
+    toys: []
   }
+
+  componentDidMount(){
+    fetch('http://localhost:3000/toys')
+    .then(res => res.json())
+    .then(toys => this.setState({toys}))
+  }
+
 
   handleClick = () => {
     let newBoolean = !this.state.display
@@ -32,7 +40,7 @@ class App extends React.Component{
         <div className="buttonContainer">
           <button onClick={this.handleClick}> Add a Toy </button>
         </div>
-        <ToyContainer/>
+        <ToyContainer toys={this.state.toys}/>
       </>
     );
   }
